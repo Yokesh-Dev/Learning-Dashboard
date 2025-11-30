@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Productivity Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <h1>Developer Productivity Dashboard</h1>
+            <div class="header-actions">
+                <button class="btn btn--sm btn--secondary" id="exportBtn">Export Data</button>
+                <button class="btn btn--sm btn--primary" id="addNewBtn">Add New Entry</button>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="master">Master Dashboard</button>
+            <button class="tab-btn" data-tab="mindset">Mindset</button>
+            <button class="tab-btn" data-tab="upskilling">Upskilling</button>
+            <button class="tab-btn" data-tab="practice">Hands-on Practice</button>
+            <button class="tab-btn" data-tab="interview">Interview Prep</button>
+            <button class="tab-btn" data-tab="jobs">Job Applications</button>
+        </nav>
+
+        <!-- Master Dashboard Tab -->
+        <div id="master-tab" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="dashboard-section">
+                    <h2>Progress Summary</h2>
+                    <div class="progress-table">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Total</th>
+                                    <th>Completed</th>
+                                    <th>In Progress</th>
+                                    <th>Progress</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="progress-summary-body">
+                                <!-- Progress data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h2>Weekly Overview</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="tasks-completed">0</div>
+                            <div class="stat-label">Tasks Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="hours-spent">0</div>
+                            <div class="stat-label">Hours Spent</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="pending-tasks">0</div>
+                            <div class="stat-label">Pending Tasks</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="upcoming-deadlines">0</div>
+                            <div class="stat-label">Upcoming Deadlines</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-section">
+                    <h2>Progress Charts</h2>
+                    <div class="charts-grid">
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="progressChart"></canvas>
+                        </div>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mindset Tab -->
+        <div id="mindset-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Mindset Tracking</h2>
+                <div class="tab-actions">
+                    <input type="text" class="form-control search-input" placeholder="Search activities..." id="mindset-search">
+                    <button class="btn btn--sm btn--primary" id="add-mindset">Add Activity</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table" id="mindset-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Activity</th>
+                            <th>Completed</th>
+                            <th>Mood Rating</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mindset-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Upskilling Tab -->
+        <div id="upskilling-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Upskilling Resources</h2>
+                <div class="tab-actions">
+                    <select class="form-control filter-select" id="upskilling-filter">
+                        <option value="">All Languages</option>
+                        <option value="React">React</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="All">General</option>
+                    </select>
+                    <select class="form-control filter-select" id="priority-filter">
+                        <option value="">All Priorities</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    <input type="text" class="form-control search-input" placeholder="Search skills..." id="upskilling-search">
+                    <button class="btn btn--sm btn--primary" id="add-upskilling">Add Resource</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table" id="upskilling-table">
+                    <thead>
+                        <tr>
+                            <th>Skill</th>
+                            <th>Resource</th>
+                            <th>Type</th>
+                            <th>Language</th>
+                            <th>Purpose</th>
+                            <th>Priority</th>
+                            <th>Progress</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="upskilling-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Hands-on Practice Tab -->
+        <div id="practice-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Hands-on Practice</h2>
+                <div class="tab-actions">
+                    <select class="form-control filter-select" id="practice-status-filter">
+                        <option value="">All Status</option>
+                        <option value="Planning">Planning</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="On Hold">On Hold</option>
+                    </select>
+                    <input type="text" class="form-control search-input" placeholder="Search projects..." id="practice-search">
+                    <button class="btn btn--sm btn--primary" id="add-practice">Add Project</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table" id="practice-table">
+                    <thead>
+                        <tr>
+                            <th>Project Name</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Tech Stack</th>
+                            <th>GitHub Link</th>
+                            <th>Date Started</th>
+                            <th>Target Completion</th>
+                            <th>Priority</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="practice-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Interview Prep Tab -->
+        <div id="interview-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Interview Preparation</h2>
+                <div class="tab-actions">
+                    <select class="form-control filter-select" id="interview-type-filter">
+                        <option value="">All Types</option>
+                        <option value="Technical">Technical</option>
+                        <option value="Behavioral">Behavioral</option>
+                        <option value="System Design">System Design</option>
+                    </select>
+                    <select class="form-control filter-select" id="confidence-filter">
+                        <option value="">All Confidence</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    <input type="text" class="form-control search-input" placeholder="Search topics..." id="interview-search">
+                    <button class="btn btn--sm btn--primary" id="add-interview">Add Topic</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table" id="interview-table">
+                    <thead>
+                        <tr>
+                            <th>Topic</th>
+                            <th>Type</th>
+                            <th>Resources</th>
+                            <th>Practice Date</th>
+                            <th>Confidence Level</th>
+                            <th>Mock Interview</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="interview-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Job Applications Tab -->
+        <div id="jobs-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Job Applications</h2>
+                <div class="tab-actions">
+                    <select class="form-control filter-select" id="job-status-filter">
+                        <option value="">All Status</option>
+                        <option value="Applied">Applied</option>
+                        <option value="Phone Screen">Phone Screen</option>
+                        <option value="Technical Interview">Technical Interview</option>
+                        <option value="Final Interview">Final Interview</option>
+                        <option value="Offer">Offer</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                    <input type="text" class="form-control search-input" placeholder="Search companies..." id="jobs-search">
+                    <button class="btn btn--sm btn--primary" id="add-job">Add Application</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="data-table" id="jobs-table">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Position</th>
+                            <th>Location</th>
+                            <th>Salary Range</th>
+                            <th>Application Date</th>
+                            <th>Status</th>
+                            <th>Contact Person</th>
+                            <th>Next Follow-up</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="jobs-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Adding/Editing Entries -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Add New Entry</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Form content will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--secondary" id="modal-cancel">Cancel</button>
+                <button class="btn btn--primary" id="modal-save">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
