@@ -1,6 +1,4 @@
 
----
-
 # Developer Productivity Dashboard
 
 The **Developer Productivity Dashboard** is an interactive web application designed to help developers track their progress in key areas of their professional growth. It provides features to monitor mindset, upskilling, hands-on practice, interview preparation, and job applications, offering a holistic view of a developer's productivity.
